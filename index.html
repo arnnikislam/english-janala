@@ -26,11 +26,12 @@
     <link rel="stylesheet" href="./styles/style.css" />
     <title>English Janala</title>
   </head>
-  <body>
+  <body class="container mx-auto">
+    <!-- header -->
     <header>
       <!-- navbar -->
       <nav>
-        <div class="navbar bg-[rgba(186,222,255,0.26)] shadow-sm">
+        <div class="navbar bg-[rgba(186,222,255,0.26)] shadow-sm px-4">
           <div class="navbar-start">
             <div class="dropdown">
               <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -136,6 +137,51 @@
         </div>
       </section>
     </header>
+
+    <!-- main -->
+    <main>
+      <!-- vocab section -->
+      <section
+        class="flex flex-col justify-center items-center gap-8 py-6 md:my-12"
+      >
+        <h2 class="font-bold text-xl md:text-3xl">
+          <span class="text-[#00BCFF]">Let's</span> Learn Vocabularies
+        </h2>
+        <div class="lessons space-x-2">
+          <button class="btn btn-outline btn-primary">
+            <i class="fa-solid fa-book-open"></i> Lesson - 1
+          </button>
+          <button class="btn btn-outline btn-primary">
+            <i class="fa-solid fa-book-open"></i> Lesson - 2
+          </button>
+          <button class="btn btn-outline btn-primary">
+            <i class="fa-solid fa-book-open"></i> Lesson - 3
+          </button>
+          <button class="btn btn-outline btn-primary">
+            <i class="fa-solid fa-book-open"></i> Lesson - 4
+          </button>
+          <button class="btn btn-outline btn-primary">
+            <i class="fa-solid fa-book-open"></i> Lesson - 5
+          </button>
+          <button class="btn btn-outline btn-primary">
+            <i class="fa-solid fa-book-open"></i> Lesson - 6
+          </button>
+          <button class="btn btn-outline btn-primary">
+            <i class="fa-solid fa-book-open"></i> Lesson - 7
+          </button>
+        </div>
+        <div
+          class="warning bg-[#F8F8F8] py-10 w-11/12 text-center mx-6 rounded-md space-y-2"
+        >
+          <p class="bangla-font text-sm text-[#79716B]">
+            আপনি এখনো কোন Lesson Select করেননি
+          </p>
+          <p class="bangla-font text-[#292524] font-semibold">
+            একটি Lesson Select করুন।
+          </p>
+        </div>
+      </section>
+    </main>
 
     <!-- connect with js file -->
     <script src="./js/script.js"></script>
