@@ -61,32 +61,31 @@ const displayLevelWord = (words) => {
   words.forEach((word) => {
     const card = document.createElement("div");
     card.innerHTML = `
-    <div class="bg-white py-8 px-6 rounded-sm text-center space-y-3 shadow-sm">
-          <h2 class="text-2xl font-bold">${word.word}</h2>
-          <p>${word.pronunciation}</p>
-          <p class="bangla-font text-gray-500 font-bold text-xl">
-            ${word.meaning}
+    <div class="bg-white py-8 px-6 rounded-sm text-center space-y-3 shadow-sm h-full">
+          <h2 class="text-2xl font-bold">${word.word ? word.word : "শদ পাওয়া যায়নি"}</h2>
+          <p>Meaning /Pronounciation</p>
+          <p class="bangla-font text-gray-500 font-semibold text-xl">
+            "${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"} /${word.pronunciation ? word.pronunciation : "উচ্চারণ নেই"}"
           </p>
-          <div class="flex justify-between">
-            <a href="" class=""
+          <div class="flex justify-between mt-8">
+            <button onclick="loadDetailWord(${word.id})"
               ><i
                 class="fa-solid fa-circle-info text-xl bg-[rgba(26,145,255,0.1)] rounded p-2"
               ></i
-            ></a>
-            <a href=""
+            ></button>
+            <button
               ><i
                 class="fa-solid fa-volume-high text-xl bg-[rgba(26,145,255,0.1)] rounded p-2"
               ></i
-            ></a>
+            ></button>
           </div>
-        </div>
+    </div>
     `;
     cardContainer.appendChild(card);
   });
-}
+};
 
-
-// for btn toggling
+// for btn toggling using event delegation
 document
   .querySelector(".lessonsContainer")
   .addEventListener("click", (event) => {
@@ -94,9 +93,44 @@ document
 
     if (!lessonBtn) return;
 
-    document.querySelectorAll(".lesson-btn").forEach((btn) => {
+    const allBtn = document.querySelectorAll(".lesson-btn");
+    allBtn.forEach((btn) => {
       btn.classList.remove("bg-primary", "text-white");
     });
 
     lessonBtn.classList.add("bg-primary", "text-white");
   });
+
+//   load details of word
+const loadDetailWord = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  displayDetailWord(data.data);
+};
+// displaying details of word
+const displayDetailWord = (word) => {
+  // for synonyms
+  const synonymAll = (arr) => {
+    const htmlElement = arr.map(
+      (synonym) => `<button class="btn bg-[#EDF7FF]">${synonym}</button>`,
+    );
+    return htmlElement.join(" ");
+  };
+  const detailsContainer = document.getElementById("details-container");
+  detailsContainer.innerHTML = `
+    <h3 class="text-lg font-bold">
+              Eager (<i class="fa-solid fa-microphone-lines"></i>:${word.word})
+            </h3>
+            <p class="font-semibold">Meaning</p>
+            <p class="bangla-font">${word.meaning}</p>
+            <p class="font-semibold">Example</p>
+            <p>${word.sentence}</p>
+            <p class="font-semibold bangla-font">সমার্থক শব্দ গুলো</p>
+            <div class="space-x-2">
+              ${synonymAll(word.synonyms)}
+            </div>
+            <button class="btn btn-primary">Complete Learning</button>
+    `;
+  document.getElementById("word_modal").showModal();
+};
