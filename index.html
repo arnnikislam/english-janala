@@ -22,9 +22,86 @@
       type="text/css"
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- link with css -->
+    <link rel="stylesheet" href="./styles/style.css" />
     <title>English Janala</title>
   </head>
   <body>
+    <header>
+        <!-- navbar -->
+      <nav>
+        <div class="navbar bg-[rgba(186,222,255,0.26)] shadow-sm">
+          <div class="navbar-start">
+            <div class="dropdown">
+              <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                <svg
+                  aria-label="Menu"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </div>
+              <ul
+                tabindex="-1"
+                class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow space-y-1"
+              >
+                <li>
+                  <button class="">
+                    <i class="fa-solid fa-circle-question"></i> FAQ
+                  </button>
+                </li>
+                <li>
+                  <button class="">
+                    <i class="fa-solid fa-book-open"></i> Learn
+                  </button>
+                </li>
+                <li>
+                  <button class="">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="flex items-center gap-1">
+              <span>English</span
+              ><img src="./assets/logo.png" alt="" srcset="" /><span
+                class="bangla-font"
+                >জানালা</span
+              >
+            </div>
+          </div>
+          <div class="navbar-end hidden lg:flex">
+            <ul class="menu menu-horizontal px-1 space-x-2">
+              <li>
+                <button class="btn btn-outline btn-primary">
+                  <i class="fa-solid fa-circle-question"></i> FAQ
+                </button>
+              </li>
+              <li>
+                <button class="btn btn-outline btn-primary">
+                  <i class="fa-solid fa-book-open"></i> Learn
+                </button>
+              </li>
+              <li>
+                <button class="btn btn-outline btn-primary">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
     <!-- connect with js file -->
     <script src="./js/script.js"></script>
   </body>
