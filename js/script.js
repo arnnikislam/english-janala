@@ -21,8 +21,20 @@ const displayLessons = (lessons) => {
 };
 loadLessons();
 
+// load spinner
+const loadSpinner = (status) => {
+  if (status) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("word-container").classList.add("hidden");
+  } else {
+    document.getElementById("spinner").classList.add("hidden");
+    document.getElementById("word-container").classList.remove("hidden");
+  }
+};
+
 // load word by level
 const loadLevelWord = (levelId) => {
+  loadSpinner(true);
   const url = `https://openapi.programming-hero.com/api/level/${levelId}`;
   fetch(url)
     .then((res) => res.json())
@@ -55,6 +67,7 @@ const displayLevelWord = (words) => {
     </div>
         `;
     cardContainer.append(errorAlert);
+    loadSpinner(false);
     return;
   }
   // every card of word
@@ -82,6 +95,7 @@ const displayLevelWord = (words) => {
     </div>
     `;
     cardContainer.appendChild(card);
+    loadSpinner(false);
   });
 };
 
