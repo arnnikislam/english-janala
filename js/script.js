@@ -122,6 +122,7 @@ const loadDetailWord = async (id) => {
   const data = await res.json();
   displayDetailWord(data.data);
 };
+
 // displaying details of word
 const displayDetailWord = (word) => {
   // for synonyms
@@ -148,3 +149,55 @@ const displayDetailWord = (word) => {
     `;
   document.getElementById("word_modal").showModal();
 };
+
+// search by word features
+document.getElementById("search-btn").addEventListener("click", () => {
+  const input = document.getElementById("input-text");
+  const inputValue = input.value.trim().toLowerCase();
+  if (!inputValue) {
+    const wordContainer = document.getElementById("word-container");
+    wordContainer.innerHTML = "";
+    const alert = document.createElement("div");
+    alert.classList.add("col-span-full");
+    alert.innerHTML = `
+    <div role="alert" class="alert alert-warning">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+  </svg>
+  <span>Warning: Type something.....</span>
+</div>
+    `;
+    wordContainer.append(alert);
+
+    return;
+  }
+
+  loadSpinner(true);
+  //   fetching all words
+  fetch("https://openapi.programming-hero.com/api/words/all")
+    .then((res) => res.json())
+    .then((json) => {
+      const words = json.data;
+      const filteredWords = words.filter((word) =>
+        word.word.toLowerCase().includes(inputValue),
+      );
+      if (filteredWords.length === 0) {
+        const wordContainer = document.getElementById("word-container");
+        wordContainer.innerHTML = "";
+        const alert = document.createElement("div");
+        alert.classList.add("col-span-full");
+        alert.innerHTML = `
+    <div role="alert" class="alert alert-success">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+  <span>Sorry No Matched Word Found!</span>
+</div>
+    `;
+        wordContainer.append(alert);
+        loadSpinner(false);
+        return;
+      }
+      displayLevelWord(filteredWords);
+    });
+});
