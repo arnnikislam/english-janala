@@ -1,4 +1,4 @@
-// for pronounce
+// for pronounce word
 function pronounceWord(word) {
   const utterance = new SpeechSynthesisUtterance(word);
   utterance.lang = "en-EN"; // English
@@ -82,6 +82,9 @@ const displayLevelWord = (words) => {
     const card = document.createElement("div");
     card.innerHTML = `
     <div class="bg-white py-8 px-6 rounded-sm text-center space-y-3 shadow-sm h-full">
+
+    <button onclick="favWord(${word.id})"><i class="fa-solid fa-heart text-xl bg-[rgba(26,145,255,0.1)] rounded p-2"></i></button>
+
           <h2 class="text-2xl font-bold">${word.word ? word.word : "শদ পাওয়া যায়নি"}</h2>
           <p>Meaning /Pronounciation</p>
           <p class="bangla-font text-gray-500 font-semibold text-xl">
@@ -207,4 +210,45 @@ document.getElementById("search-btn").addEventListener("click", () => {
       }
       displayLevelWord(filteredWords);
     });
+});
+
+// saved fav words
+const favWord = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const word = data.data;
+
+  // every card of word
+  const cardContainer = document.getElementById("word-container2");
+  const card = document.createElement("div");
+  card.innerHTML = `
+    <div class="bg-white py-8 px-6 rounded-sm text-center space-y-3 shadow-sm h-full">
+
+    <button"><i class="fa-solid fa-heart text-xl bg-[rgba(26,145,255,0.1)] rounded p-2 text-red-400"></i></button>
+
+          <h2 class="text-2xl font-bold">${word.word ? word.word : "শদ পাওয়া যায়নি"}</h2>
+          <p>Meaning /Pronounciation</p>
+          <p class="bangla-font text-gray-500 font-semibold text-xl">
+            "${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"} /${word.pronunciation ? word.pronunciation : "উচ্চারণ নেই"}"
+          </p>
+          <div class="flex justify-between mt-8">
+            <button onclick="loadDetailWord(${word.id})"
+              ><i
+                class="fa-solid fa-circle-info text-xl bg-[rgba(26,145,255,0.1)] rounded p-2"
+              ></i
+            ></button>
+            <button onclick="pronounceWord('${word.word}')"
+              ><i
+                class="fa-solid fa-volume-high text-xl bg-[rgba(26,145,255,0.1)] rounded p-2"
+              ></i
+            ></button>
+          </div>
+    </div>
+    `;
+  cardContainer.appendChild(card);
+};
+document.getElementById("fav-btn").addEventListener("click", () => {
+  document.getElementById("word-container2").classList.remove("hidden");
+  document.getElementById("word-container").classList.add("hidden");
 });
